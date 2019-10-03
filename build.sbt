@@ -13,4 +13,4 @@ resolvers in ThisBuild ++= Seq( "Sonatype releases" at "https://oss.sonatype.org
                                 "JCenter" at "http://jcenter.bintray.com",
                                 "Local Ivy Repository" at s"file://${System.getProperty( "user.home" )}/.ivy2/local/default" )
 
-lazy val root = ( project in file( "." ) ).settings( libraryDependencies ++= logging ++ scalaTest )
+lazy val root = ( project in file( "." ) ).settings( libraryDependencies ++= spark ++ jackson ++ logging ++ scalaTest )
