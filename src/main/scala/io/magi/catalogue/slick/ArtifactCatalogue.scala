@@ -1,10 +1,9 @@
-package io.magi.slick
+package io.magi.catalogue.slick
 
 import java.util.Properties
 
 import io.magi.artifacts.Artifact
-import io.magi.catlogues.Catalogue
-import io.magi.sql.slick.SlickProvider
+import io.magi.catlogue.Catalogue
 import org.slf4j.{Logger, LoggerFactory}
 
 import scala.concurrent.duration.FiniteDuration
@@ -18,12 +17,11 @@ abstract class ArtifactCatalogue( override val properties : Properties ) extends
 
     val table = TableQuery[ Artifacts ]
 
+    override def schema( ) : profile.SchemaDescription = table.schema
+
     def init( ) : Unit = db.run( table.schema.createIfNotExists )
 
-    def exists( id : Long ) : Boolean = {
-        val existenceCheck = db.run( table.filter( _.id === id ).result )
-        Await.result( existenceCheck, FiniteDuration( 1, "second" ) ).nonEmpty
-    }
+    def exists( id : Long ) : Boolean = Await.result( db.run( table.filter( _.id === id ).result ), FiniteDuration( 1, "second" ) ).nonEmpty
 
     def getById( id : Long ) : Future[ Option[ Artifact ] ] = db.run( table.filter( _.id === id ).result.headOption )
 
@@ -37,7 +35,7 @@ abstract class ArtifactCatalogue( override val properties : Properties ) extends
 
     def delete( artifact : Artifact ) : Future[ Int ] = db.run( table.filter( _.id === artifact.id ).delete )
 
-    protected class Artifacts( tag : Tag ) extends Table[ Artifact ]( tag, "artifact" ) {
+    class Artifacts( tag : Tag ) extends Table[ Artifact ]( tag, "artifact" ) {
 
         def id = column[ Long ]( "id", O.AutoInc, O.PrimaryKey )
 

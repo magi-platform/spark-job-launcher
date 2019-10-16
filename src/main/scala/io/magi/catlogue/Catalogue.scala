@@ -1,6 +1,4 @@
-package io.magi.catlogues
-
-import io.magi.artifacts.Artifact
+package io.magi.catlogue
 
 import scala.concurrent.Future
 
@@ -14,10 +12,10 @@ trait Catalogue[ T ] {
 
     def getAll( ) : Future[ Seq[ T ] ]
 
-    def create( artifact : Artifact ) : Future[ T ]
+    def create( artifact : T ) : Future[ T ]
 
-    def update( artifact : Artifact ) : Future[ Option[ T ] ]
+    def update( artifact : T ) : Future[ Option[ T ] ]
 
-    def delete( artifact : Artifact ) : Future[ Int ]
+    def delete( artifact : T ) : Future[ Int ]
 
 }

@@ -1,5 +1,5 @@
 package io.magi.catalogues
 
-class CatalogueTestSuite {
+import org.scalatest.Sequential
 
-}
+class CatalogueTestSuite extends Sequential( new SqliteArtifactSlickCatalogueSuite, new SqliteJobCatalogueSuite )

@@ -1,3 +1,3 @@
 package io.magi.jobs
 
-case class JobDescriptor( name : String, version : String, artifactId : Long )
+case class JobDescriptor( id : Long, name : String, version : String, artifactId : Long )

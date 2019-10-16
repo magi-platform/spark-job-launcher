@@ -1,4 +1,4 @@
-package io.magi.sql.slick
+package io.magi.catalogue.slick
 
 import java.util.Properties
 
@@ -16,5 +16,7 @@ trait SlickProvider {
     import profile.api._
 
     val db : Database
+
+    def schema( ) : profile.SchemaDescription
 
 }

@@ -13,7 +13,7 @@ class SparkJobRunner( sparkProps : SparkProperties ) {
 
     private val LOG : Logger = LoggerFactory.getLogger( getClass )
 
-    def launchJob( command : LaunchJob ) : Try[ (SparkAppHandle, Job) ] = {
+    def launchJob( command : LaunchJob ) : Try[ (Job, SparkAppHandle) ] = {
         try {
             val startTime = Instant.now()
             val jobName = s"${command.jobDescriptor.name}-${System.currentTimeMillis()}"
@@ -26,7 +26,7 @@ class SparkJobRunner( sparkProps : SparkProperties ) {
               .setMainClass( command.artifact.mainClass )
               .addAppArgs( command.jobArgs.mkString( " " ) )
               .startApplication()
-            Success( (handler, Job( 0, jobName, startTime, None, command.jobArgs )) )
+            Success( (Job( 0, jobName, command.jobDescriptor.id, startTime, None, command.jobArgs ), handler) )
         }
         catch {
             case t : Throwable => {
