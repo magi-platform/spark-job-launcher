@@ -6,7 +6,8 @@ import slick.jdbc.JdbcProfile
 
 import scala.concurrent.ExecutionContext
 
-trait SlickComponent {
+trait SlickProvider {
+
     implicit val ec = ExecutionContext.global
 
     val properties : Properties

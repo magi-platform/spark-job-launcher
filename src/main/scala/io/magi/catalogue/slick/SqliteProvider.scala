@@ -2,7 +2,7 @@ package io.magi.sql.slick
 
 import slick.jdbc.SQLiteProfile
 
-trait SqliteProvider extends SlickComponent {
+trait SqliteProvider extends SlickProvider {
 
     override val profile = SQLiteProfile
 
