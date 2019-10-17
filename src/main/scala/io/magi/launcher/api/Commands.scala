@@ -1,7 +1,6 @@
-package io.magi.api
+package io.magi.launcher.api
 
-import io.magi.artifacts.Artifact
-import io.magi.jobs.JobDescriptor
+import io.magi.launcher.core.{Artifact, JobDescriptor}
 
 case class LaunchJob( jobDescriptor : JobDescriptor,
                       artifact : Artifact,

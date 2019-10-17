@@ -1,4 +1,4 @@
-package io.magi.jobs
+package io.magi.launcher.core
 
 import java.time.Instant
 

@@ -1,4 +1,4 @@
-package io.magi.catlogue
+package io.magi.launcher.catlogue
 
 import scala.concurrent.Future
 

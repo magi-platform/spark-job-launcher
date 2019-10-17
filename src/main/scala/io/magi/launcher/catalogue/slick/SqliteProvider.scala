@@ -1,4 +1,4 @@
-package io.magi.catalogue.slick
+package io.magi.launcher.catalogue.slick
 
 import slick.jdbc.SQLiteProfile
 
