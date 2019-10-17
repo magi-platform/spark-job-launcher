@@ -10,7 +10,7 @@ trait SlickProvider {
 
     implicit val ec = ExecutionContext.global
 
-    val properties : Properties
+    lazy val properties : Properties = null
     val profile : JdbcProfile
 
     import profile.api._

@@ -9,7 +9,7 @@ import org.slf4j.{Logger, LoggerFactory}
 import scala.concurrent.duration.FiniteDuration
 import scala.concurrent.{Await, Future}
 
-abstract class SlickJobCatalogue( override val properties : Properties ) extends JobCatalogue with SlickCatalogueSchema {
+abstract class SlickJobCatalogue extends JobCatalogue with SlickCatalogueSchema {
 
     private val LOG : Logger = LoggerFactory.getLogger( getClass )
 

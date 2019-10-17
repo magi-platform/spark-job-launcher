@@ -22,3 +22,13 @@ lazy val root = ( project in file( "." ) ).settings( libraryDependencies ++= spa
                                                                              ++ betterFiles
                                                                              ++ scalaTest
                                                                              ++ scalaMock )
+
+enablePlugins( JavaAppPackaging )
+
+test in assembly := {}
+
+assemblyMergeStrategy in assembly := {
+    case PathList( "META-INF", "MANIFEST.MF" ) => MergeStrategy.discard
+    case PathList( "reference.conf" ) => MergeStrategy.concat
+    case x => MergeStrategy.last
+}

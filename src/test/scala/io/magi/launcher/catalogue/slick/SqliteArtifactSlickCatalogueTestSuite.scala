@@ -4,7 +4,7 @@ import io.magi.launcher.core.Artifact
 
 import scala.concurrent.Await
 
-class SqliteArtifactSlickCatalogueTestSuite extends SqliteSlickTestBase with SqliteProvider {
+class SqliteArtifactSlickCatalogueTestSuite extends SqliteSlickTestBase {
 
     "Artifact Catalogue" should "save a new artifact" in {
         val created : Artifact = Await.result( artifactCatalogue.create( Artifact( 0, s"$unique()", "1", "Main", "asdf" ) ), awaitDuration )

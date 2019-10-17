@@ -9,17 +9,25 @@ import org.scalatest.{BeforeAndAfter, FlatSpec, Matchers}
 import scala.concurrent.duration.FiniteDuration
 import scala.util.Random
 
-abstract class SqliteSlickTestBase extends FlatSpec with CatalogueContext with Matchers with BeforeAndAfter {
+trait SqliteSlickTestBase extends FlatSpec with CatalogueContext with Matchers with BeforeAndAfter {
 
-    val properties : Properties = {
+    val props : Properties = {
         val p = new Properties()
         p.load( Resource.getAsStream( "test.conf" ) )
         p
     }
 
-    override val jobDescriptorCatalogue : JobDescriptorCatalogue = new SlickJobDescriptorCatalogue( properties ) with SqliteProvider
-    override val jobCatalogue : JobCatalogue = new SlickJobCatalogue( properties ) with SqliteProvider
-    override val artifactCatalogue : ArtifactCatalogue = new SlickArtifactCatalogue( properties ) with SqliteProvider
+    override val jobDescriptorCatalogue : JobDescriptorCatalogue = new SlickJobDescriptorCatalogue with SqliteProvider {
+        override lazy val properties : Properties = props
+    }
+
+    override val jobCatalogue : JobCatalogue = new SlickJobCatalogue with SqliteProvider {
+        override lazy val properties : Properties = props
+    }
+
+    override val artifactCatalogue : ArtifactCatalogue = new SlickArtifactCatalogue with SqliteProvider {
+        override lazy val properties : Properties = props
+    }
 
     //@formatter:off
     before {
