@@ -7,7 +7,7 @@ import io.magi.launcher.core.Job
 import scala.concurrent.Await
 import scala.util.Random
 
-class SqliteJobCatalogueSuite extends SqliteSlickTestBase {
+class SqliteJobCatalogueTestSuite extends SqliteSlickTestBase {
 
     "Job Catalogue" should "create a new Job" in {
         val created : Job = Await.result( jobCatalogue.create( Job( 0, s"${unique()}", 1, Instant.now(), None, "--env default" ) ), awaitDuration )

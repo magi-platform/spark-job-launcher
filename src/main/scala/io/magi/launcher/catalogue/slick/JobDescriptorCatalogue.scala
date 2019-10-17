@@ -15,20 +15,20 @@ abstract class JobDescriptorCatalogue( override val properties : Properties ) ex
 
     import profile.api._
 
-    val table = TableQuery[ JobDescriptors ]
+    override def init( ) : Unit = db.run( jobDescriptors.schema.createIfNotExists )
 
-    override def init( ) : Unit = db.run( table.schema.createIfNotExists )
+    override def exists( id : Long ) : Boolean = Await.result( db.run( jobDescriptors.filter( _.id === id ).result ), FiniteDuration( 1, "second" ) ).nonEmpty
 
-    override def exists( id : Long ) : Boolean = Await.result( db.run( table.filter( _.id === id ).result ), FiniteDuration( 1, "second" ) ).nonEmpty
+    override def getById( id : Long ) : Future[ Option[ JobDescriptor ] ] = db.run( jobDescriptors.filter( _.id === id ).result.headOption )
 
-    override def getById( id : Long ) : Future[ Option[ JobDescriptor ] ] = ???
+    override def getAll( ) : Future[ Seq[ JobDescriptor ] ] = db.run( jobDescriptors.result )
 
-    override def getAll( ) : Future[ Seq[ JobDescriptor ] ] = ???
+    override def create( descriptor : JobDescriptor ) : Future[ JobDescriptor ] = {
+        db.run( jobDescriptors returning jobDescriptors.map( _.id ) into ( ( descriptor, generatedId ) => descriptor.copy( id = generatedId ) ) += descriptor )
+    }
 
-    override def create( artifact : JobDescriptor ) : Future[ JobDescriptor ] = ???
+    override def update( descriptor : JobDescriptor ) : Future[ Option[ JobDescriptor ] ] = db.run( ( jobDescriptors returning jobDescriptors ).insertOrUpdate( descriptor ) )
 
-    override def update( artifact : JobDescriptor ) : Future[ Option[ JobDescriptor ] ] = ???
-
-    override def delete( artifact : JobDescriptor ) : Future[ Int ] = ???
+    override def delete( descriptor : JobDescriptor ) : Future[ Int ] = db.run( jobDescriptors.filter( _.id === descriptor.id ).delete )
 
 }

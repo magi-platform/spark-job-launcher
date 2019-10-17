@@ -12,10 +12,10 @@ trait Catalogue[ T ] {
 
     def getAll( ) : Future[ Seq[ T ] ]
 
-    def create( artifact : T ) : Future[ T ]
+    def create( item : T ) : Future[ T ]
 
-    def update( artifact : T ) : Future[ Option[ T ] ]
+    def update( item : T ) : Future[ Option[ T ] ]
 
-    def delete( artifact : T ) : Future[ Int ]
+    def delete( item : T ) : Future[ Int ]
 
 }

@@ -8,18 +8,9 @@ trait SlickCatalogueSchema extends SlickProvider {
 
     import profile.api._
 
-    class JobDescriptors( tag : Tag ) extends Table[ JobDescriptor ]( tag, "job_descriptor" ) {
-
-        def id = column[ Long ]( "id", O.PrimaryKey, O.AutoInc )
-
-        def name = column[ String ]( "name", O.Unique )
-
-        def version = column[ String ]( "version" )
-
-        def artifactId = column[ Long ]( "artifact_id" )
-
-        override def * = (id, name, version, artifactId).mapTo[ JobDescriptor ]
-    }
+    val artifacts = TableQuery[ Artifacts ]
+    val jobs = TableQuery[ Jobs ]
+    val jobDescriptors = TableQuery[ JobDescriptors ]
 
     class Artifacts( tag : Tag ) extends Table[ Artifact ]( tag, "artifact" ) {
 
@@ -34,6 +25,21 @@ trait SlickCatalogueSchema extends SlickProvider {
         def jarFile = column[ String ]( "jar_file" )
 
         override def * = (id, name, version, mainClass, jarFile).mapTo[ Artifact ]
+    }
+
+    class JobDescriptors( tag : Tag ) extends Table[ JobDescriptor ]( tag, "job_descriptor" ) {
+
+        def id = column[ Long ]( "id", O.PrimaryKey, O.AutoInc )
+
+        def name = column[ String ]( "name", O.Unique )
+
+        def version = column[ String ]( "version" )
+
+        def artifactId = column[ Long ]( "artifact_id" )
+
+        def artifact = foreignKey( "artifact_fk", artifactId, artifacts )( _.id, onDelete = ForeignKeyAction.Cascade )
+
+        override def * = (id, name, version, artifactId).mapTo[ JobDescriptor ]
     }
 
     class Jobs( tag : Tag ) extends Table[ Job ]( tag, "job" ) {

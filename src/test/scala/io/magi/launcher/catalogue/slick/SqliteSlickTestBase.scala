@@ -25,9 +25,9 @@ abstract class SqliteSlickTestBase extends FlatSpec with CatalogueContext with M
 
     //@formatter:off
     before {
-        jobCatalogue.init()
-        jobCatalogue.init()
         artifactCatalogue.init()
+        jobCatalogue.init()
+        jobDescriptorCatalogue.init()
     }
 
     after {

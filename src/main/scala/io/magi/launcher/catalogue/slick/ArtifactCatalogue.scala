@@ -17,20 +17,20 @@ abstract class ArtifactCatalogue( override val properties : Properties ) extends
 
     val table = TableQuery[ Artifacts ]
 
-    override def init( ) : Unit = db.run( table.schema.createIfNotExists )
+    override def init( ) : Unit = db.run( artifacts.schema.createIfNotExists )
 
-    override def exists( id : Long ) : Boolean = Await.result( db.run( table.filter( _.id === id ).result ), FiniteDuration( 1, "second" ) ).nonEmpty
+    override def exists( id : Long ) : Boolean = Await.result( db.run( artifacts.filter( _.id === id ).result ), FiniteDuration( 1, "second" ) ).nonEmpty
 
-    override def getById( id : Long ) : Future[ Option[ Artifact ] ] = db.run( table.filter( _.id === id ).result.headOption )
+    override def getById( id : Long ) : Future[ Option[ Artifact ] ] = db.run( artifacts.filter( _.id === id ).result.headOption )
 
-    override def getAll( ) : Future[ Seq[ Artifact ] ] = db.run( table.result )
+    override def getAll( ) : Future[ Seq[ Artifact ] ] = db.run( artifacts.result )
 
     override def create( artifact : Artifact ) : Future[ Artifact ] = {
-        db.run( table returning table.map( _.id ) into ( ( artifact, generatedId ) => artifact.copy( id = generatedId ) ) += artifact )
+        db.run( table returning artifacts.map( _.id ) into ( ( artifact, generatedId ) => artifact.copy( id = generatedId ) ) += artifact )
     }
 
     override def update( artifact : Artifact ) : Future[ Option[ Artifact ] ] = db.run( ( table returning table ).insertOrUpdate( artifact ) )
 
-    override def delete( artifact : Artifact ) : Future[ Int ] = db.run( table.filter( _.id === artifact.id ).delete )
+    override def delete( artifact : Artifact ) : Future[ Int ] = db.run( artifacts.filter( _.id === artifact.id ).delete )
 
 }

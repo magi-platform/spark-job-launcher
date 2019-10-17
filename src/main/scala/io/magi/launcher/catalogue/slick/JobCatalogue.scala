@@ -15,21 +15,19 @@ abstract class JobCatalogue( override val properties : Properties ) extends Slic
 
     import profile.api._
 
-    val table = TableQuery[ Jobs ]
+    override def init( ) : Unit = db.run( jobs.schema.createIfNotExists )
 
-    override def init( ) : Unit = db.run( table.schema.createIfNotExists )
+    override def exists( id : Long ) : Boolean = Await.result( db.run( jobs.filter( _.id === id ).result ), FiniteDuration( 1, "second" ) ).nonEmpty
 
-    override def exists( id : Long ) : Boolean = Await.result( db.run( table.filter( _.id === id ).result ), FiniteDuration( 1, "second" ) ).nonEmpty
+    override def getById( id : Long ) : Future[ Option[ Job ] ] = db.run( jobs.filter( _.id === id ).result.headOption )
 
-    override def getById( id : Long ) : Future[ Option[ Job ] ] = db.run( table.filter( _.id === id ).result.headOption )
-
-    override def getAll( ) : Future[ Seq[ Job ] ] = db.run( table.result )
+    override def getAll( ) : Future[ Seq[ Job ] ] = db.run( jobs.result )
 
     override def create( job : Job ) : Future[ Job ] = {
-        db.run( table returning table.map( _.id ) into ( ( job, generatedId ) => job.copy( id = generatedId ) ) += job )
+        db.run( jobs returning jobs.map( _.id ) into ( ( job, generatedId ) => job.copy( id = generatedId ) ) += job )
     }
 
-    override def update( job : Job ) : Future[ Option[ Job ] ] = db.run( ( table returning table ).insertOrUpdate( job ) )
+    override def update( job : Job ) : Future[ Option[ Job ] ] = db.run( ( jobs returning jobs ).insertOrUpdate( job ) )
 
     override def delete( job : Job ) : Future[ Int ] = throw new UnsupportedOperationException( "Deleting jobs is an invalid operation" )
 }
