@@ -2,14 +2,14 @@ package io.magi.launcher.catalogue.slick
 
 import java.util.Properties
 
-import io.magi.launcher.catlogue.Catalogue
+import io.magi.launcher.catlogue.{ArtifactCatalogue, Catalogue}
 import io.magi.launcher.core.Artifact
 import org.slf4j.{Logger, LoggerFactory}
 
 import scala.concurrent.duration.FiniteDuration
 import scala.concurrent.{Await, Future}
 
-abstract class ArtifactCatalogue( override val properties : Properties ) extends Catalogue[ Artifact ] with SlickCatalogueSchema with SlickProvider {
+abstract class SlickArtifactCatalogue( override val properties : Properties ) extends ArtifactCatalogue with SlickCatalogueSchema with SlickProvider {
 
     private val LOG : Logger = LoggerFactory.getLogger( getClass )
 

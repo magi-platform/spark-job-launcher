@@ -1,13 +1,11 @@
 package io.magi.launcher.catlogue
 
-import io.magi.launcher.core.{Artifact, Job, JobDescriptor}
-
 trait CatalogueContext {
 
-    val jobDescriptorCatalogue : Catalogue[ JobDescriptor ]
+    val jobDescriptorCatalogue : JobDescriptorCatalogue
 
-    val jobCatalogue : Catalogue[ Job ]
+    val jobCatalogue : JobCatalogue
 
-    val artifactCatalogue : Catalogue[ Artifact ]
+    val artifactCatalogue : ArtifactCatalogue
 
 }
