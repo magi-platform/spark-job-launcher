@@ -13,7 +13,6 @@ abstract class SqliteSlickTestBase extends FlatSpec with CatalogueContext with M
 
     val properties : Properties = {
         val p = new Properties()
-        println( "Loading props" )
         p.load( Resource.getAsStream( "test.conf" ) )
         p
     }

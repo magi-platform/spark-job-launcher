@@ -16,7 +16,9 @@ resolvers in ThisBuild ++= Seq( "Sonatype releases" at "https://oss.sonatype.org
 lazy val root = ( project in file( "." ) ).settings( libraryDependencies ++= spark
                                                                              ++ slick
                                                                              ++ sqlite
+                                                                             ++ scalatra
                                                                              ++ jackson
                                                                              ++ logging
                                                                              ++ betterFiles
-                                                                             ++ scalaTest )
+                                                                             ++ scalaTest
+                                                                             ++ scalaMock )
