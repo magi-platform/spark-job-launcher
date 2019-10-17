@@ -1,9 +1,9 @@
-package io.magi.api
+package io.magi.launcher.api
 
 import java.time.Instant
 
-import io.magi.jobs.Job
-import io.magi.spark.SparkProperties
+import io.magi.launcher.core.Job
+import io.magi.launcher.spark.SparkProperties
 import org.apache.spark.launcher.{SparkAppHandle, SparkLauncher}
 import org.slf4j.{Logger, LoggerFactory}
 

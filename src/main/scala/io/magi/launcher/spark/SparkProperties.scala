@@ -1,4 +1,4 @@
-package io.magi.spark
+package io.magi.launcher.spark
 
 import java.util.Properties
 
