@@ -26,14 +26,30 @@ class ScalatraBootstrap extends LifeCycle {
         descriptorCatalogue.init()
         jobsCatalogue.init()
 
-        val artifactController = new ArtifactController( "" ) with CatalogueContext with SqliteProvider {
+        val artifactController = new ArtifactController() with CatalogueContext with SqliteProvider {
             override lazy val properties : Properties = props
             override val jobDescriptorCatalogue : JobDescriptorCatalogue = descriptorCatalogue
             override val jobCatalogue : JobCatalogue = jobsCatalogue
             override val artifactCatalogue : ArtifactCatalogue = artifactsCatalogue
         }
 
-        context.mount( artifactController, "/*" )
+        val jobController = new JobController() with CatalogueContext with SqliteProvider {
+            override lazy val properties : Properties = props
+            override val jobDescriptorCatalogue : JobDescriptorCatalogue = descriptorCatalogue
+            override val jobCatalogue : JobCatalogue = jobsCatalogue
+            override val artifactCatalogue : ArtifactCatalogue = artifactsCatalogue
+        }
+
+        val descriptorController = new JobDescriptorController() with CatalogueContext with SqliteProvider {
+            override lazy val properties : Properties = props
+            override val jobDescriptorCatalogue : JobDescriptorCatalogue = descriptorCatalogue
+            override val jobCatalogue : JobCatalogue = jobsCatalogue
+            override val artifactCatalogue : ArtifactCatalogue = artifactsCatalogue
+        }
+
+        context.mount( artifactController, "/artifacts/*" )
+        context.mount( jobController, "/jobs/*" )
+        context.mount( descriptorController, "/job-descriptors/*" )
     }
 
 }

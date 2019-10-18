@@ -7,24 +7,22 @@ import org.scalatra.test.scalatest.ScalatraSuite
 
 class ArtifactControllerTestSuite extends FlatSpec with ScalatraSuite with MockFactory {
 
-    val apiPrefix = "magi"
 
-    //    val jobDescriptorCatalogue = stub[ JobDescriptorCatalogue ]
-    //    val jobCatalogue = stub[ JobCatalogue ]
     val artifactCatalogue = stub[ ArtifactCatalogue ]
 
-    val controller = new ArtifactController( apiPrefix ) {
+    val controller = new ArtifactController {
         override val jobDescriptorCatalogue : JobDescriptorCatalogue = null
         override val jobCatalogue : JobCatalogue = null
         override val artifactCatalogue : ArtifactCatalogue = artifactCatalogue
     }
 
-    addServlet( controller, "/*" )
+    addServlet( controller, "/artifacts/*" )
 
     "Artifact Controller healthcheck" should "respond Ok( 200 ) when healthy" in {
-        get( apiPrefix + "/artifacts/health" ) {
-                                                   response.status shouldBe 200
-                                               }
-
+        //@formatter:off
+        get( "artifacts/health" ) {
+            response.status shouldBe 200
+        }
+        //@formatter:on
     }
 }
